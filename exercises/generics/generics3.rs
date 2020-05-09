@@ -6,9 +6,13 @@
 // Make the necessary code changes to support alphabetical report cards, thereby making the second
 // test pass.
 
-// I AM NOT DONE
+pub enum Grade{
+    Num(f32),
+    Alpha(String),
+}
+
 pub struct ReportCard {
-    pub grade: f32,
+    pub grade: Grade,
     pub student_name: String,
     pub student_age: u8,
 }
@@ -19,6 +23,15 @@ impl ReportCard {
     }
 }
 
+impl std::fmt::Display for Grade {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Grade::Num(n) => write!(f, "{}", n),
+            Grade::Alpha(s) => write!(f, "{}", s),
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -26,7 +39,7 @@ mod tests {
     #[test]
     fn generate_numeric_report_card() {
         let report_card = ReportCard {
-            grade: 2.1, 
+            grade: Grade::Num(2.1),
             student_name: "Tom Wriggle".to_string(), 
             student_age: 12,
         };
@@ -37,7 +50,7 @@ mod tests {
     fn generate_alphabetic_report_card() {
         // TODO: Make sure to change the grade here after you finish the exercise.
         let report_card = ReportCard {
-            grade: 2.1, 
+            grade: Grade::Alpha(String::from("A+")),
             student_name: "Gary Plotter".to_string(), 
             student_age: 11,
         };
